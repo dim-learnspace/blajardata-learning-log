@@ -155,3 +155,61 @@ WHERE status = 'Complete';
 SELECT COUNT(*) AS jumlah_pesanan
 FROM `bigquery-public-data.thelook_ecommerce.orders`
 WHERE status = 'Cancelled';
+
+-- [ 1.7 ] HANDS ON
+-- 1.7A Tampilkan 5 produk TERMURAH di department Women, kategori Dresses
+SELECT 
+  name,
+  brand,
+  retail_price
+FROM `bigquery-public-data.thelook_ecommerce.products`
+WHERE department = 'Women' AND category = 'Dresses'
+ORDER BY retail_price ASC
+LIMIT 5
+
+-- 1.7B Ada berapa pesanan degan status Returned?
+SELECT COUNT(*) AS jumlah_pesanan
+FROM `bigquery-public-data.thelook_ecommerce.orders`
+WHERE status = 'Returned';
+
+-- [ 1.7 ] LATIHAN MANDIRI
+
+-- L1. Semua produk dari satu brand pilihanmu, urut dari harga tertinggi.
+--      (Cari dulu nama brand-nya dengan SELECT DISTINCT brand ...)
+-- 1. Mencari Nama Brand
+SELECT DISTINCT brand
+FROM bigquery-public-data.thelook_ecommerce.products
+ORDER BY brand ASC
+-- 2. Mencari Produk dari brand pilihan dengan harga tertinggi ke terendah
+SELECT *
+FROM bigquery-public-data.thelook_ecommerce.products
+WHERE brand = 'Alpinestars'
+ORDER BY retail_price DESC
+
+-- L2. Pelanggan dari Brasil yang berumur di bawah 25 tahun.
+--      (Petunjuk: di dataset ini Brasil ditulis 'Brasil')
+SELECT *
+FROM bigquery-public-data.thelook_ecommerce.users
+WHERE country = 'Brasil' AND age < 25
+
+-- L3. 10 pesanan Returned yang paling baru (urutkan berdasarkan created_at).
+SELECT * 
+FROM bigquery-public-data.thelook_ecommerce.orders
+WHERE status = 'Returned'
+ORDER BY created_at DESC
+LIMIT 10
+
+
+-- L4. Produk kategori Sweaters dengan harga 50 sampai 100 USD.
+SELECT *
+FROM bigquery-public-data.thelook_ecommerce.products
+WHERE category = 'Sweaters' AND retail_price BETWEEN 50 AND 100
+
+
+-- L5. Pelanggan yang datang dari Facebook (kolom traffic_source)
+--      dan tinggal di United States. Tampilkan 20 baris.
+SELECT *
+FROM bigquery-public-data.thelook_ecommerce.users
+WHERE traffic_source = 'Facebook' AND country = 'United States'
+LIMIT 20
+
